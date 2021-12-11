@@ -4,15 +4,26 @@ const {id, first, last, company, bio, twitterHandle, favorite, sessions} = data[
 
 const Session = ({title, room}) => {
     
+    // const {title,room} = session;
     // const {title, room} = props;
     // const title = props.title;
     // const room = props.room;
 
+    
+
     return (
       <span className='session w-100'>
-        {title}<strong>Room: {room}</strong>
+        {title}<strong>Room: {room.name}</strong>
       </span>
     ); 
+}
+
+const Sessions = ({sessions}) => {
+    return (
+    <div className='sessionBox card h-250'>
+    <Session {...sessions[0]}/>
+    </div> 
+    );
 }
 
 const IndexPage = () => {
@@ -51,9 +62,7 @@ const IndexPage = () => {
                         </div>
                         </div>
                        </div>
-                    <div className='sessionBox card h-250'>
-                        <Session title={sessions[0].title} room={sessions[0].room.name}/>
-                    </div>         
+                       <Sessions sessions={sessions} />        
                   </div>
               )})}
             </div>
