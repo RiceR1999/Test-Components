@@ -570,7 +570,7 @@ input:checked + .switch:before {
 }
 
 .action i {
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .action .fa-angle-down {
