@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { SpeakerFilterContext } from '../../context/SpeakerFilterContext';
 
 const SpeakerInfo = ({ first, last, bio, company, twitterHandle, favorite, onFavoriteToggle }) => {
     return(
@@ -73,18 +74,31 @@ const Session = ({title, room}) => {
       </span>
     ); 
 }
-
-const Sessions = ({sessions, showSessions}) => {
+// showSessions === true ? <div className='sessionBox card h-250'>
+    // <Session {...sessions[0]}/>
+    // </div>  : <> </>
+const Sessions = ({ sessions, showSessions }) => {
+    const { eventYear } = useContext(SpeakerFilterContext);
     return (
-    showSessions === true ? <div className='sessionBox card h-250'>
-    <Session {...sessions[0]}/>
-    </div>  : <> </>
-    
+        <div className="sessionBox card h-250">
+            {sessions.filter((session) => {
+                return session.eventYear === eventYear;
+            })
+                .map((session) => {
+                    return (
+                        <div className="session w-100" key={session.id}>
+                            <Session {...session} />
+                        </div>
+                )
+            })
+            }
+        </div>
     );
 }
 
-const Speaker = ({speaker, showSessions, onFavoriteToggle}) => {
-    const{id, first, last, sessions} = speaker;
+const Speaker = ({speaker, onFavoriteToggle}) => {
+    const { id, first, last, sessions } = speaker;
+    const { showSessions } = useContext(SpeakerFilterContext);
     return (
         <div 
                     key={id}
