@@ -9,7 +9,7 @@ const Layout = ({ startingTheme, children }) => {
     );
 }
 
-const LayoutNoThemeProvider = (children) => {
+const LayoutNoThemeProvider = ({ children }) => {
     
     const { theme } = useContext(ThemeContext);
     
