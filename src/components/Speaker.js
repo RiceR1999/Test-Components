@@ -1,4 +1,6 @@
-const SpeakerInfo = ({first, last, bio, company, twitterHandle, favorite, onFavoriteToggle}) => {
+import React, { useState } from 'react';
+
+const SpeakerInfo = ({ first, last, bio, company, twitterHandle, favorite, onFavoriteToggle }) => {
     return(
     <div className='speaker-info'>
     <div className='d-flex justify-content-between mb-3'>
@@ -24,12 +26,22 @@ const SpeakerInfo = ({first, last, bio, company, twitterHandle, favorite, onFavo
     );
 }
 
-const SpeakerFavorite = ({favorite, onFavoriteToggle}) => {
+const SpeakerFavorite = ({ favorite, onFavoriteToggle }) => {
+    const [inTransition, setInTransition] = useState(false);
+    
+    function doneCallback() {
+        setInTransition(false);
+        console.log(`in SpeakerFavorite:doneCallback  ${new Date().getMilliseconds()}`);
+    }
     return (
         <div className="action padB1">
-            <span onClick={onFavoriteToggle}>
+            <span onClick={function () {
+                setInTransition(true);
+                return onFavoriteToggle(doneCallback);
+            }}>
                 <i className={favorite === true ? "fa fa-star orange" : "fa fa-star-o orange"}>{" "}
-                Favorite{" "}
+                    Favorite{" "}
+                    { inTransition ? (<span className="fas fa-circle-notch fa-spin"> </span>) : <></>}
                 </i>
             </span>
         </div>

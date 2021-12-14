@@ -1,6 +1,7 @@
-const LoadingSpinner = ({isLoading}) => {
+import { REQUEST_STATUS } from '../../hooks/useRequestDelay';
+const LoadingSpinner = ({ requestStatus }) => {
     return (
-    isLoading === true ?
+    requestStatus === REQUEST_STATUS.LOADING ?
         <div className="svgMain">
             <svg width="51px" height="50px" viewBox="0 0 51 50">
                 <rect y="0" width="50" height="13" fill="#1fa2ff">
