@@ -3,16 +3,17 @@ import { data } from '../../SpeakerData';
 import { useState, useEffect, useContext } from 'react';
 import LoadingSpinner from './LoadingSpinner';
 import ReactPlaceholder from 'react-placeholder/lib';
-import useRequestDelay, { REQUEST_STATUS } from '../../hooks/useRequestDelay';
+import { REQUEST_STATUS } from '../../hooks/useRequestDelay';
 import { SpeakerFilterContext } from '../../context/SpeakerFilterContext';
 import SpeakerAdd from './SpeakerAdd';
+import useRequestRest from '../../hooks/useRequestRest';
 
 const SpeakersList = () => {
     
     const {
         data: speakersData, requestStatus, error,
         updateRecord, insertRecord, deleteRecord,
-    } = useRequestDelay(2000, data);
+    } = useRequestRest();
 
     const { searchQuery, eventYear } = useContext(SpeakerFilterContext);
 

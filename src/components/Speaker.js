@@ -62,13 +62,28 @@ const SpeakerFavorite = ({ }) => {
     );
 }
 
+const ImageWithFallBack = ({src, ...props}) => {
+    const [error, setError] = useState(false);
+    const [imgSrc, setImgSrc] = useState(src);
+
+    function onError() {
+        if (!error) {
+            setImgSrc("/images/speaker-99999.jpg");
+            setError(true);
+        }
+    }
+    return <img src={imgSrc} onError={onError}{...props} />;
+
+    
+}
+
 const SpeakerImage = () => {
     
   const { speaker: { id, first, last } } = useContext(SpeakerContext);
 
   return (
     <div className='speaker-img d-flex flex-row justify-content-center align-items-center h-300'>
-    <img className='contain-fit' src={`/images/speaker-${id}.jpg`}
+    <ImageWithFallBack className='contain-fit' src={`/images/speaker-${id}.jpg`}
     width='300'
     alt={`${first} ${last}`}/>
 </div>
