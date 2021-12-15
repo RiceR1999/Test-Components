@@ -1,5 +1,12 @@
 import { REQUEST_STATUS } from '../../hooks/useRequestDelay';
-const LoadingSpinner = ({ requestStatus }) => {
+import SpeakerAdd from './SpeakerAdd';
+import { useContext } from 'react';
+import { SpeakerFilterContext } from '../../context/SpeakerFilterContext';
+
+const LoadingSpinner = ({ requestStatus, insertRecord }) => {
+
+    const { eventYear } = useContext(SpeakerFilterContext);
+    
     return (
     requestStatus === REQUEST_STATUS.LOADING ?
         <div className="svgMain">
@@ -18,7 +25,7 @@ const LoadingSpinner = ({ requestStatus }) => {
                 </rect>
             </svg>
             </div>
-            : <> </>
+            : <SpeakerAdd eventYear={eventYear} insertRecord={insertRecord} />
     );
 }
 export default LoadingSpinner;

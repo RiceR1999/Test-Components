@@ -18,7 +18,7 @@ const SpeakersToolbar = () => {
                             <b> Show Sessions &nbsp; &nbsp; </b>
                             <label className="fav">
                                 <input type="checkbox" checked={showSessions}
-                                    onClick={(event) => { setShowSessions(event.target.checked) }} />
+                                    onClick={(event) => { setShowSessions(event.target.checked); }} />
                                 <span className="switch"></span>
                             </label>
                         </li>

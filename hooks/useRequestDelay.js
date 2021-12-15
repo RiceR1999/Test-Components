@@ -30,14 +30,68 @@ const useRequestDelay = (delayTime = 1000, initialData=[]) => {
         }
         delayFunc();
     }, []);
-
-    const updateRecord = (recordUpdated, doneCallback) => {
+     
+     const updateRecord = (record, doneCallback) => {
         
         const originalRecords = [...data];
         
         const newRecords = data.map((rec) => {
-            return rec.id === recordUpdated.id ? recordUpdated : rec;
+            return rec.id === record.id ? record : rec;
         });
+
+    async function delayFunction() {
+            try {
+                setData(newRecords);
+                await delay(delayTime);
+                if (doneCallback){
+                    doneCallback();
+                }
+            }
+            catch (e)
+            {
+                console.log("error thrown inside delayFunction", error);
+                if (doneCallback) {
+                    doneCallback()
+                }
+                setData(originalRecords);
+            }
+        }
+        delayFunction();
+    }
+
+    const deleteRecord = (record, doneCallback) => {
+        
+        const originalRecords = [...data];
+        
+         const newRecords = data.filter((rec) => {
+             return rec.id != record.id;
+        });
+
+        async function delayFunction() {
+            try {
+                setData(newRecords);
+                await delay(delayTime);
+                if (doneCallback){
+                    doneCallback();
+                }
+            }
+            catch (e)
+            {
+                console.log("error thrown inside delayFunction", error);
+                if (doneCallback) {
+                    doneCallback()
+                }
+                setData(originalRecords);
+            }
+        }
+        delayFunction();
+    }
+    
+    const insertRecord = (record, doneCallback) => {
+        
+        const originalRecords = [...data];
+        
+        const newRecords = [record, ...data];
 
         async function delayFunction() {
             try {
@@ -76,8 +130,9 @@ const useRequestDelay = (delayTime = 1000, initialData=[]) => {
     
     //     setSpeakersData(speakersDataNew);
     // }
+        
     return {
-        data, requestStatus, error, updateRecord
+        data, requestStatus, error, updateRecord, insertRecord, deleteRecord
     };
 }
 export default useRequestDelay;

@@ -5,13 +5,13 @@ import LoadingSpinner from './LoadingSpinner';
 import ReactPlaceholder from 'react-placeholder/lib';
 import useRequestDelay, { REQUEST_STATUS } from '../../hooks/useRequestDelay';
 import { SpeakerFilterContext } from '../../context/SpeakerFilterContext';
-
+import SpeakerAdd from './SpeakerAdd';
 
 const SpeakersList = () => {
     
     const {
         data: speakersData, requestStatus, error,
-        updateRecord
+        updateRecord, insertRecord, deleteRecord,
     } = useRequestDelay(2000, data);
 
     const { searchQuery, eventYear } = useContext(SpeakerFilterContext);
@@ -24,7 +24,7 @@ const SpeakersList = () => {
     return (
         <div className='container speakers-list'>
             <div className="row">
-                <LoadingSpinner requestStatus={requestStatus}/>
+                <LoadingSpinner requestStatus={requestStatus} insertRecord={insertRecord} />
                 {speakersData
                     .filter((speaker) => {
                         return (
@@ -39,20 +39,23 @@ const SpeakersList = () => {
                     })
                     
                     .map((speaker) => {
-                    return(<Speaker key={speaker.id} 
-                        speaker={speaker} 
-                        onFavoriteToggle={(doneCallback) => {
-                            updateRecord({
-                                ...speaker,
-                                favorite: !speaker.favorite,
-                            }, doneCallback)
-                        }} />);
+                        return (<Speaker key={speaker.id}
+                            speaker={speaker}
+                            updateRecord={updateRecord}
+                            insertRecord={insertRecord}
+                            deleteRecord={deleteRecord}/>);
             })}
             </div>
          </div>
     );
 }
-
+ 
+// onFavoriteToggle={(doneCallback) => {
+//     updateRecord({
+//         ...speaker,
+//         favorite: !speaker.favorite,
+//     }, doneCallback)
+// }}
 
 
 export default SpeakersList;
